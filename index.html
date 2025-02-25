@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>럭키태 이벤트</title>
     <style>
-        @import url('https://cdn.jsdelivr.net/gh/webfontworld/baemin/BMJUA.css');
         @import url('https://cdn.jsdelivr.net/gh/webfontworld/baemin/BMDOHYEON.css');
 
-        body { font-family: 'BMJUA', sans-serif; text-align: center; padding: 50px; }
+        body { font-family: 'BMDOHYEON', sans-serif; text-align: center; padding: 50px; }
         #container { max-width: 400px; margin: auto; }
-        #roulette { font-family: 'BMDOHYEON', sans-serif; font-size: 2em; height: 50px; margin: 20px 0; display: none; }
-        #phoneInput, #startBtn, #pickBtn { font-family: 'BMJUA', sans-serif; font-size: 1em; padding: 10px; margin: 5px; }
-        #result { font-family: 'BMDOHYEON', sans-serif; font-size: 1.5em; margin-top: 20px; font-weight: bold; }
-        .main_title { font-family: 'BMDOHYEON', sans-serif; font-size: 2em; }
-        .info01 { font-family: 'BMJUA', sans-serif; color: red; font-size: 0.8em; margin-top: 0px; }
+        #roulette { font-size: 2em; height: 50px; margin: 20px 0; display: none; }
+        #phoneInput, #startBtn, #pickBtn { font-size: 1em; padding: 10px; margin: 5px; }
+        #result { font-size: 1.5em; margin-top: 20px; font-weight: bold; }
+        .main_title { font-size: 2em; }
+        .info01 { color: red; font-size: 0.8em; margin-top: 0px; }
+        .main_img { width: 70%; height: auto;}
     </style>
 </head>
 <body>
     <div id="container">
         <h1 class="main_title">새해맞이 럭키태 이벤트</h1>
-        <img class="main_img" src="pythonProject/src/main_img.png">
+        <img class="main_img" src="src/event_poster.png">
         <p id="phonePrompt">전화번호 전체를 입력하세요:</p>
         <p class="info01" id="infoText"> 중복 참여 제한을 위한 용도로만 활용됩니다. </p>
         <input type="text" id="phoneInput" maxlength="11" placeholder="전화번호 입력 (- 없이)">
