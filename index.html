@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>럭키태 이벤트</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        #container { max-width: 400px; margin: auto; }
+        #roulette { font-size: 2em; height: 50px; margin: 20px 0; display: none; }
+        #phoneInput, #startBtn, #pickBtn { font-size: 1em; padding: 10px; margin: 5px; }
+        #result { font-size: 1.5em; margin-top: 20px; font-weight: bold; }
+        .main_title { font-size: 1.5em; }
+        .main_img {width: 70%; height: auto;}
+        .info01 { color: red; font-size: 0.8em; margin-top: 0px; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1 class="main_title">새해맞이 럭키태 이벤트</h1>
+        <img class="main_img" src="pythonProject/src/럭키태이벤트.png">
+        <p id="phonePrompt">전화번호 전체를 입력하세요:</p>
+        <p class="info01"> 중복 참여 제한을 위한 용도로만 활용됩니다. </p>
+        <input type="text" id="phoneInput" maxlength="11" placeholder="전화번호 입력 (- 없이)">
+        <button id="startBtn">입력</button>
+
+        <div id="game" style="display:none;">
+            <p>단어 룰렛이 돌아갑니다!</p>
+            <div id="roulette">럭키태</div>
+            <button id="pickBtn">뽑기</button>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        let words = [];
+        const specialWords = { "황금 럭키태": 0.01, "럭키태": 0.10, "부자태": 0.10, "장수태": 0.10 };
+        let rouletteInterval;
+        let rouletteSpeed = 50;
+        let userPhone;
+        let isRouletteRunning = true;
+
+        fetch('words.txt')
+            .then(response => response.text())
+            .then(text => {
+                words = text.split(', ');
+            });
+
+        document.getElementById("startBtn").addEventListener("click", function() {
+            userPhone = document.getElementById("phoneInput").value;
+            if (userPhone.length === 11) {
+                if (localStorage.getItem(`participation_${userPhone}`)) {
+                    alert("이미 참여한 번호입니다. 다시 참여할 수 없습니다.");
+                } else {
+                    localStorage.setItem(`participation_${userPhone}`, "true");
+                    document.getElementById("phonePrompt").style.display = "none";
+                    document.getElementById("phoneInput").style.display = "none";
+                    document.getElementById("startBtn").style.display = "none";
+
+                    document.getElementById("game").style.display = "block";
+                    document.getElementById("roulette").style.display = "block";
+                    startRoulette();
+                }
+            } else {
+                alert("전화번호 전체를 입력하세요.");
+            }
+        });
+
+        document.getElementById("pickBtn").addEventListener("click", function() {
+            if (!isRouletteRunning) return;
+            isRouletteRunning = false;
+            clearInterval(rouletteInterval);
+            let selectedWord = getRandomWord();
+            document.getElementById("roulette").innerText = selectedWord;
+
+            if (specialWords[selectedWord]) {
+                document.getElementById("result").innerText = `축하합니다! ${selectedWord} 당첨! 🎉`;
+            } else {
+                document.getElementById("result").innerText = "아쉽지만 꽝! 다음 기회에!";
+            }
+        });
+
+        function startRoulette() {
+            rouletteInterval = setInterval(() => {
+                document.getElementById("roulette").innerText = words[Math.floor(Math.random() * words.length)];
+            }, rouletteSpeed);
+        }
+
+        function getRandomWord() {
+            let rand = Math.random();
+            let cumulativeProbability = 0;
+            for (let word in specialWords) {
+                cumulativeProbability += specialWords[word];
+                if (rand < cumulativeProbability) return word;
+            }
+            return words[Math.floor(Math.random() * words.length)];
+        }
+    </script>
+</body>
+</html>
