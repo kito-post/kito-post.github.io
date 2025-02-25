@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>럭키태 이벤트</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        @import url('https://cdn.jsdelivr.net/gh/webfontworld/baemin/BMJUA.css');
+        @import url('https://cdn.jsdelivr.net/gh/webfontworld/baemin/BMDOHYEON.css');
+
+        body { font-family: 'BMJUA', sans-serif; text-align: center; padding: 50px; }
         #container { max-width: 400px; margin: auto; }
-        #roulette { font-size: 2em; height: 50px; margin: 20px 0; display: none; }
-        #phoneInput, #startBtn, #pickBtn { font-size: 1em; padding: 10px; margin: 5px; }
-        #result { font-size: 1.5em; margin-top: 20px; font-weight: bold; }
-        .main_title { font-size: 1.5em; }
-        .main_img {width: 70%; height: auto;}
-        .info01 { color: red; font-size: 0.8em; margin-top: 0px; }
+        #roulette { font-family: 'BMDOHYEON', sans-serif; font-size: 2em; height: 50px; margin: 20px 0; display: none; }
+        #phoneInput, #startBtn, #pickBtn { font-family: 'BMJUA', sans-serif; font-size: 1em; padding: 10px; margin: 5px; }
+        #result { font-family: 'BMDOHYEON', sans-serif; font-size: 1.5em; margin-top: 20px; font-weight: bold; }
+        .main_title { font-family: 'BMDOHYEON', sans-serif; font-size: 2em; }
+        .info01 { font-family: 'BMJUA', sans-serif; color: red; font-size: 0.8em; margin-top: 0px; }
     </style>
 </head>
 <body>
     <div id="container">
         <h1 class="main_title">새해맞이 럭키태 이벤트</h1>
-        <img class="main_img" src="pythonProject/src/럭키태이벤트.png">
+        <img class="main_img" src="pythonProject/src/main_img.png">
         <p id="phonePrompt">전화번호 전체를 입력하세요:</p>
-        <p class="info01"> 중복 참여 제한을 위한 용도로만 활용됩니다. </p>
+        <p class="info01" id="infoText"> 중복 참여 제한을 위한 용도로만 활용됩니다. </p>
         <input type="text" id="phoneInput" maxlength="11" placeholder="전화번호 입력 (- 없이)">
         <button id="startBtn">입력</button>
 
@@ -34,7 +36,13 @@
 
     <script>
         let words = [];
-        const specialWords = { "황금 럭키태": 0.01, "럭키태": 0.10, "부자태": 0.10, "장수태": 0.10 };
+        const specialWords = {
+            "럭키태": { message: "축하합니다! 클로버 키링 당첨!", probability: 0.10 },
+            "부자태": { message: "축하합니다! 클로버 키링 당첨!", probability: 0.10 },
+            "장수태": { message: "축하합니다! 클로버 키링 당첨!", probability: 0.10 },
+            "황금 럭키태": { message: "축하합니다! 25cm 럭키태 당첨!", probability: 0.01 },
+            "행운의 럭키태": { message: "축하합니다! 15cm 럭키태 당첨!", probability: 0.05 }
+        };
         let rouletteInterval;
         let rouletteSpeed = 50;
         let userPhone;
@@ -74,10 +82,12 @@
             document.getElementById("roulette").innerText = selectedWord;
 
             if (specialWords[selectedWord]) {
-                document.getElementById("result").innerText = `축하합니다! ${selectedWord} 당첨! 🎉`;
+                document.getElementById("result").innerText = specialWords[selectedWord].message;
             } else {
                 document.getElementById("result").innerText = "아쉽지만 꽝! 다음 기회에!";
             }
+
+            document.getElementById("infoText").style.display = "none";
         });
 
         function startRoulette() {
@@ -90,7 +100,7 @@
             let rand = Math.random();
             let cumulativeProbability = 0;
             for (let word in specialWords) {
-                cumulativeProbability += specialWords[word];
+                cumulativeProbability += specialWords[word].probability;
                 if (rand < cumulativeProbability) return word;
             }
             return words[Math.floor(Math.random() * words.length)];
