@@ -14,15 +14,16 @@
         #result { font-size: 1.5em; margin-top: 20px; font-weight: bold; }
         .main_title { font-size: 2em; }
         .info01 { color: red; font-size: 0.8em; margin-top: 0px; }
-        .main_img { width: 70%; height: auto; }
+        .main_img { width: 80%; height: auto; }
+
     </style>
 </head>
 <body>
     <div id="container">
-        <h1 class="main_title">새해맞이 럭키태 이벤트 v4</h1>
+        <h1 class="main_title">새해맞이 럭키태 이벤트</h1>
         <img class="main_img" src="src/event_poster.png">
         <p id="phonePrompt">전화번호 전체를 입력하세요:</p>
-        <p class="info01" id="infoText"> 중복 참여 제한을 위한 용도로만 활용됩니다. </p>
+        <p class="info01" id="infoText"> 중복 참여 제한을 위한 용도로만 활용됩니다(v4) </p>
         <input type="text" id="phoneInput" maxlength="11" placeholder="전화번호 입력 (- 없이)">
         <button id="startBtn">입력</button>
 
@@ -41,7 +42,7 @@
             "부자태": { message: "축하합니다! 클로버 키링 당첨!", probability: 0.10 },
             "장수태": { message: "축하합니다! 클로버 키링 당첨!", probability: 0.10 },
             "황금 럭키태": { message: "축하합니다! 25cm 럭키태 당첨!", probability: 0.00 },
-            "행운의 럭키태": { message: "축하합니다! 15cm 럭키태 당첨!", probability: 0.00 }
+            "행운의 럭키태": { message: "축하합니다! 15cm 럭키태 당첨!", probability: 0.05 }
         };
         let rouletteInterval;
         let rouletteSpeed = 50;
